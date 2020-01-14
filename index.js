@@ -6,7 +6,10 @@ const fetchData = async (searchTerm) => {
 		}
 	});
 
-	// console.log("Response", response.data);
+	if (response.data.Error){
+		return [];
+	}
+	
 	return response.data.Search;
 }
 
@@ -40,10 +43,8 @@ const onInput = (event) => {
 }; */
 
 const onInput = async (event) => {
-	console.log(this);
 	let movies = await fetchData(event.target.value);
-
-	i
+	
 	for(let movie of movies){
 		const div = document.createElement('div');
 		div.innerHTML = `

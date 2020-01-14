@@ -6,7 +6,8 @@ const fetchData = async (searchTerm) => {
 		}
 	});
 
-	console.log("Response", response.data);
+	// console.log("Response", response.data);
+	return response.data.Search;
 }
 
 // fetchData();
@@ -38,9 +39,20 @@ const onInput = (event) => {
 	}, 500)
 }; */
 
-const onInput = (event) => {
+const onInput = async (event) => {
 	console.log(this);
-	fetchData(event.target.value);
+	let movies = await fetchData(event.target.value);
+
+	i
+	for(let movie of movies){
+		const div = document.createElement('div');
+		div.innerHTML = `
+			<img src="${movie.Poster}"/>
+			<h1>${movie.Title}</h1>
+		`;
+		document.querySelector('#target').appendChild(div);
+
+	}
 }
 
 // input.addEventListener('input', onInput);

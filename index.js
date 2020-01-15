@@ -1,14 +1,10 @@
-createAutoComplete({
-	root: document.querySelector('.autocomplete'),
+const autoCompleteConfig = {
 	renderOption(movie) {
 		const imgSrc = movie.Poster === "N/A" ? '' : movie.Poster;
 		return `
 			<img src="${imgSrc}"/>
 			${movie.Title} (<i>${movie.Year}</i>)
 		`;
-	},
-	onOptionSelect(movie){
-		onMovieSelect(movie);
 	},
 	inputValueAfterSelect(movie) {
 		return movie.Title
@@ -26,7 +22,25 @@ createAutoComplete({
 		}
 		
 		return response.data.Search;
-		} 
+	} 
+}
+
+createAutoComplete({
+	...autoCompleteConfig,
+	root: document.querySelector('#left-autocomplete'),
+	onOptionSelect(movie){
+		document.querySelector('.tutorial').classList.add('is-hidden');
+		onMovieSelect(movie, document.querySelector('#left-summary'));
+	},
+ });
+
+createAutoComplete({
+	...autoCompleteConfig,
+	root: document.querySelector('#right-autocomplete'),
+	onOptionSelect(movie){
+		document.querySelector('.tutorial').classList.add('is-hidden');
+		onMovieSelect(movie, document.querySelector('#right-summary'));
+	},
  });
 
 
@@ -41,10 +55,10 @@ const fetchMovie = async (imdbID) => {
 }
 
 
-const onMovieSelect = async (movie) => {
+const onMovieSelect = async (movie, summaryElement) => {
 	let movieDetails = await fetchMovie(movie.imdbID);
 	console.log(movieDetails);
-	document.querySelector('#summary').innerHTML = movieTemplate(movieDetails);
+	summaryElement.innerHTML = movieTemplate(movieDetails);
 }
 
 const movieTemplate = (movieDetails) => {
@@ -66,12 +80,20 @@ const movieTemplate = (movieDetails) => {
 		<article class="notification is-primary">
 			<p class="title">${movieDetails.Awards}</p>
 			<p class="subtitle">Awards</p>
+		</article>
+		<article class="notification is-primary">
 			<p class="title">${movieDetails.BoxOffice}</p>
 			<p class="subtitle">BoxOffice</p>
+		</article>
+		<article class="notification is-primary">
 			<p class="title">${movieDetails.Metascore}</p>
 			<p class="subtitle">Metascore</p>
+		</article>
+		<article class="notification is-primary">
 			<p class="title">${movieDetails.imdbRating}</p>
 			<p class="subtitle">IMDB Rating</p>
+		</article>
+		<article class="notification is-primary">
 			<p class="title">${movieDetails.imdbVotes}</p>
 			<p class="subtitle">IMDB imdbVotes</p>
 		</article>

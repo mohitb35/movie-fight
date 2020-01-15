@@ -93,7 +93,7 @@ document.addEventListener('click', (event) => {
 
 const onMovieSelect = async (movie) => {
 	let movieDetails = await fetchMovie(movie.imdbID);
-	// console.log(movieDetails);
+	console.log(movieDetails);
 	document.querySelector('#summary').innerHTML = movieTemplate(movieDetails);
 }
 
@@ -112,6 +112,18 @@ const movieTemplate = (movieDetails) => {
 					<p>${movieDetails.Plot}</p>
 				</div>
 			</div>
+		</article>
+		<article class="notification is-primary">
+			<p class="title">${movieDetails.Awards}</p>
+			<p class="subtitle">Awards</p>
+			<p class="title">${movieDetails.BoxOffice}</p>
+			<p class="subtitle">BoxOffice</p>
+			<p class="title">${movieDetails.Metascore}</p>
+			<p class="subtitle">Metascore</p>
+			<p class="title">${movieDetails.imdbRating}</p>
+			<p class="subtitle">IMDB Rating</p>
+			<p class="title">${movieDetails.imdbVotes}</p>
+			<p class="subtitle">IMDB imdbVotes</p>
 		</article>
 	`
 }

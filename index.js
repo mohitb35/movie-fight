@@ -31,8 +31,7 @@ const fetchMovie = async (imdbID) => {
 			i: imdbID
 		}
 	});
-
-	console.log("Response", response.data);
+	return response.data;
 }
 
 
@@ -94,5 +93,25 @@ document.addEventListener('click', (event) => {
 
 const onMovieSelect = async (movie) => {
 	let movieDetails = await fetchMovie(movie.imdbID);
-	console.log(movieDetails);
+	// console.log(movieDetails);
+	document.querySelector('#summary').innerHTML = movieTemplate(movieDetails);
+}
+
+const movieTemplate = (movieDetails) => {
+	return `
+		<article class="media">
+			<figure class="media-left">
+				<p class="image">
+					<img src=${movieDetails.Poster} alt=${movieDetails.Title}>
+				</p>
+			</figure>
+			<div class="media-content">
+				<div class="content">
+					<h1>${movieDetails.Title}</h1>
+					<h4>${movieDetails.Genre}</h4>
+					<p>${movieDetails.Plot}</p>
+				</div>
+			</div>
+		</article>
+	`
 }
